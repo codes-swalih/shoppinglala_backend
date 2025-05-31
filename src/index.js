@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bodyParser.json());
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'your-vercel-frontend-url.vercel.app'],
+  origin: ['http://localhost:3000', 'https://shoppinglala-frontend.vercel.app'],
   credentials: true
 }));
 
