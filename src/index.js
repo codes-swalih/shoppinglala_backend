@@ -13,6 +13,11 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+// Middleware
+app.use(cors({
+  origin: ['http://localhost:3000', 'your-vercel-frontend-url.vercel.app'],
+  credentials: true
+}));
 
 // Connect to MongoDB
 mongoose
