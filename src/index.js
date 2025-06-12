@@ -3,95 +3,109 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
-// Load environment variables from .env file
+
+// Load environment variables
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
-// Middleware
-app.use(cors({
-  origin: ['http://localhost:3000', 'https://shoppinglala-frontend.vercel.app', "https://www.shoppinglala.in"],
-  credentials: true
-}));
+// CORS Configuration
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://shoppinglala-frontend.vercel.app',
+  'https://www.shoppinglala.in',
+];
 
-// Connect to MongoDB
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
+
+// Middleware
+app.use(express.json()); // modern replacement for body-parser
+
+// MongoDB Connection
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 10000, // Timeout after 10s instead of hanging
+    socketTimeoutMS: 45000,          // Close sockets after 45s inactivity
   })
   .then(() => {
-    console.log('Connected to MongoDB');
+    console.log('✅ Connected to MongoDB');
   })
   .catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
+    console.error('❌ MongoDB connection error:', error.message);
   });
 
-// Routes
-
-// var cron = require('node-cron');
-
-// cron.schedule('* * * * *', () => {
-//   console.log('running a task every minute');
-// });
-
-const homeRoutes = require('./routes/home');
-const authRoutes = require('./routes/auth');
-const brandRoutes = require('./routes/brand');
-const categoryRoutes = require('./routes/category');
-const subcategoryRoutes = require('./routes/subcategory');
-const newsletterRoutes = require('./routes/newsletter');
-const productRoutes = require('./routes/product');
-const dashboardRoutes = require('./routes/dashboard');
-const searchRoutes = require('./routes/search');
-const userRoutes = require('./routes/user');
-const cartRoutes = require('./routes/cart');
-const couponCodeRoutes = require('./routes/coupon-code');
-const productReviewRoutes = require('./routes/product-review');
-const reviewRoutes = require('./routes/review');
-const wishlistRoutes = require('./routes/wishlist');
-const OrderRoutes = require('./routes/order');
-const paymentRoutes = require('./routes/payment-intents');
-const delete_fileRoutes = require('./routes/file-delete');
-const shopRoutes = require('./routes/shop');
-const payment = require('./routes/payment');
-const currency = require('./routes/currencies');
-const compaign = require('./routes/compaign');
-
-app.use('/api', homeRoutes);
-app.use('/api', authRoutes);
-app.use('/api', brandRoutes);
-app.use('/api', categoryRoutes);
-app.use('/api', subcategoryRoutes);
-app.use('/api', newsletterRoutes);
-app.use('/api', productRoutes);
-app.use('/api', dashboardRoutes);
-app.use('/api', searchRoutes);
-app.use('/api', userRoutes);
-app.use('/api', cartRoutes);
-app.use('/api', couponCodeRoutes);
-app.use('/api', productReviewRoutes);
-app.use('/api', reviewRoutes);
-app.use('/api', wishlistRoutes);
-app.use('/api', OrderRoutes);
-app.use('/api', paymentRoutes);
-app.use('/api', delete_fileRoutes);
-app.use('/api', shopRoutes);
-app.use('/api', payment);
-app.use('/api', currency);
-app.use('/api', compaign);
-
-// GET API
-app.get('/', (req, res) => {
-  res.send('This is a GET API');
+// Optional: Handle MongoDB connection events
+mongoose.connection.on('disconnected', () => {
+  console.warn('⚠️ MongoDB disconnected.');
+});
+mongoose.connection.on('reconnected', () => {
+  console.log('🔄 MongoDB reconnected.');
 });
 
-// Start the server
+// Routes
+const routes = {
+  home: require('./routes/home'),
+  auth: require('./routes/auth'),
+  brand: require('./routes/brand'),
+  category: require('./routes/category'),
+  subcategory: require('./routes/subcategory'),
+  newsletter: require('./routes/newsletter'),
+  product: require('./routes/product'),
+  dashboard: require('./routes/dashboard'),
+  search: require('./routes/search'),
+  user: require('./routes/user'),
+  cart: require('./routes/cart'),
+  coupon: require('./routes/coupon-code'),
+  productReview: require('./routes/product-review'),
+  review: require('./routes/review'),
+  wishlist: require('./routes/wishlist'),
+  order: require('./routes/order'),
+  paymentIntent: require('./routes/payment-intents'),
+  fileDelete: require('./routes/file-delete'),
+  shop: require('./routes/shop'),
+  payment: require('./routes/payment'),
+  currency: require('./routes/currencies'),
+  campaign: require('./routes/compaign'),
+};
+
+// Register Routes
+app.use('/api', routes.home);
+app.use('/api', routes.auth);
+app.use('/api', routes.brand);
+app.use('/api', routes.category);
+app.use('/api', routes.subcategory);
+app.use('/api', routes.newsletter);
+app.use('/api', routes.product);
+app.use('/api', routes.dashboard);
+app.use('/api', routes.search);
+app.use('/api', routes.user);
+app.use('/api', routes.cart);
+app.use('/api', routes.coupon);
+app.use('/api', routes.productReview);
+app.use('/api', routes.review);
+app.use('/api', routes.wishlist);
+app.use('/api', routes.order);
+app.use('/api', routes.paymentIntent);
+app.use('/api', routes.fileDelete);
+app.use('/api', routes.shop);
+app.use('/api', routes.payment);
+app.use('/api', routes.currency);
+app.use('/api', routes.campaign);
+
+// Root route
+app.get('/', (req, res) => {
+  res.send('🟢 Backend API is running!');
+});
+
+// Start Server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
