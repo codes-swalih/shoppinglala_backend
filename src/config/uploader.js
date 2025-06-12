@@ -2,7 +2,7 @@
 const cloudinary = require("./cloudinary");
 
 const uploadOnCloudinary = file => {
-	return cloudinary.uploader.unsigned_upload(file);
+	return cloudinary.uploader.upload(file); 
 };
 
 const deleteFromCloudinary = file => {
