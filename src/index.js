@@ -108,7 +108,7 @@ app.get('/health', (req, res) => {
 
 // Root route
 app.get('/', (req, res) => {
-  res.send('🟢 Backend API is running! mass da zzzzzzzzzz');
+  res.send('🟢 Backend API is running! swalih cum shot');
 });
 
 // Start Server
