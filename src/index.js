@@ -100,6 +100,11 @@ app.use('/api', routes.payment);
 app.use('/api', routes.currency);
 app.use('/api', routes.campaign);
 
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', uptime: process.uptime() });
+});
+
+
 // Root route
 app.get('/', (req, res) => {
   res.send('🟢 Backend API is running!  fuck semera mishab pussy dd asfshle');
