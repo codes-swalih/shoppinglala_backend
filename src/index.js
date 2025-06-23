@@ -108,10 +108,10 @@ app.get('/health', (req, res) => {
 
 // Root route
 app.get('/', (req, res) => {
-  res.send('🟢 Backend API is running!  fuck semera mishab pussy dd asfshle');
+  res.send('🟢 Backend API is running!  shijas');
 });
 
 // Start Server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port  fuck semera mishab pussy asshle  ${PORT}`);
+  console.log(`🚀 Server running on port  shijas  ${PORT}`);
 });
