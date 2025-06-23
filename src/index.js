@@ -100,8 +100,9 @@ app.use('/api', routes.payment);
 app.use('/api', routes.currency);
 app.use('/api', routes.campaign);
 
+// Add this to your Express app setup
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', uptime: process.uptime() });
+  res.status(200).send('OK');
 });
 
 
