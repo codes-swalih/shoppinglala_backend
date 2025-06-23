@@ -102,10 +102,10 @@ app.use('/api', routes.campaign);
 
 // Root route
 app.get('/', (req, res) => {
-  res.send('🟢 Backend API is running!');
+  res.send('🟢 Backend API is running!  fuck semera mishab pussy asshle');
 });
 
 // Start Server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port fuck semera mishab pussy asshle ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
