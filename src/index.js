@@ -108,10 +108,10 @@ app.get('/health', (req, res) => {
 
 // Root route
 app.get('/', (req, res) => {
-  res.send('🟢 Backend API is running!  build bu hexen');
+  res.send('🟢 Backend API is running! mass da');
 });
 
 // Start Server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port  build bu hexen  ${PORT}`);
+  console.log(`🚀 Server running on port   ${PORT}`);
 });
