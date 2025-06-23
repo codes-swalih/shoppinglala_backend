@@ -102,7 +102,7 @@ app.use('/api', routes.campaign);
 
 // Root route
 app.get('/', (req, res) => {
-  res.send('🟢 Backend API is running!  fuck semera mishab pussy dd asshle');
+  res.send('🟢 Backend API is running!  fuck semera mishab pussy dd asfshle');
 });
 
 // Start Server
