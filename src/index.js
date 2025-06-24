@@ -15,6 +15,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'https://shoppinglala-frontend.vercel.app',
   'https://www.shoppinglala.in',
+  'https://shoppinglala.netlify.app'
 ];
 
 app.use(
